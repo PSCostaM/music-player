@@ -10,17 +10,19 @@ export class AlbumSongUserService {
     message: "Success",
     data : []
   }
-  async create(data:any) {
+  async addSong(data:any) {
     try{
-     ;
-      //then we create the link between the album and the song
-      const albumSong = await this.prisma.albumxSongxUser.create({
+      this.resp.status = 200; 
+      this.resp.message = "success";
+      //find if it belongs to the album already
+      const albumsong = await this.prisma.albumxSongxUser.create({
         data:{
           albumId: data.albumId,
           songId: data.songId,
           userId: data.userId
         }
       });
+      this.resp.data = albumsong;
     }catch(e){
       this.resp.status = 500;
       this.resp.message = e.message;
@@ -28,13 +30,54 @@ export class AlbumSongUserService {
     return this.resp;
   }
 
-  async findAll() {
-    return `This action returns all albumSongUser`;
+  async songExistInAlbum(data:any){
+    try{
+      this.resp.status = 200;
+      this.resp.message = "success";
+      const exists = await this.prisma.albumxSongxUser.findFirst({
+        where: {
+          albumId: data.albumId,
+          songId: data.songId
+        }
+      });
+      this.resp.data = exists;
+    }catch(e){
+      this.resp.status = 500;
+      this.resp.message = e.message;
+    }
+    return this.resp;
+  }
+  async findByUserId(id:number) {
+    try{
+      this.resp.status = 200;
+      this.resp.message = "success";
+      this.resp.data = await this.prisma.albumxSongxUser.findMany({
+        where: {
+          userId: id
+        }
+      });
+    }catch(e){
+      this.resp.error = 500;
+      this.resp.message = JSON.stringify(e);
+    }
+    return this.resp;
   }
 
-  async findOne(id: number) {
-    return `This action returns a #${id} albumSongUser`;
+  async GetSongsByAlbumId(id:number) {
+    try{
+      this.resp.status = 200;
+      this.resp.message = "success";
+      this.resp.data = await this.prisma.albumxSongxUser.findMany({
+        where: {
+          albumId: id
+        }
+      });
+    }catch(e){
+      this.resp.status = 500;
+      this.resp.message = e.message;
+    }
   }
+
 
   async update(id: number) {
     return `This action updates a #${id} albumSongUser`;

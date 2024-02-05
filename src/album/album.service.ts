@@ -10,7 +10,7 @@ export class AlbumService {
     "data":[]
   }
 
-  async createAlbum(data:any) {
+  async create(data:any) {
     try{
       this.resp.status = 200;
       this.resp.message = "success";
@@ -39,5 +39,19 @@ export class AlbumService {
     }
     return this.resp;
   }
-
+  async update(id:number,data:any){
+    try{
+      this.resp.status = 200;
+      this.resp.message = "success";
+      //where data should be the name and description of the album
+      this.resp.data = await this.prisma.album.update({
+      where: {id:id},
+      data
+      });
+    }catch(e){
+      this.resp.status = 400;
+      this.resp.message = e.message;
+    }
+    return this.resp;
+  }
 }
