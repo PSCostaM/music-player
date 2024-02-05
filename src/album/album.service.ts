@@ -16,7 +16,10 @@ export class AlbumService {
       this.resp.message = "success";
       //data recieved should be the name and description of the album
       this.resp.data = await this.prisma.album.create({
-        data
+        data:{
+          name:data.name,
+          description:data.description
+        }
       });
     }catch(e){
       this.resp.status = 400;

@@ -5,31 +5,31 @@ import { Song } from '@prisma/client';
 
 @Controller('songs')
 export class SongController{
-    constructor(private songService : SongService){}
+  constructor(private songService : SongService){}
 
-    @Get()
-    async getAllSongs(){
-        return await this.songService.getAllSongs();
-    }
+  @Get()
+  async getAllSongs(){
+    return await this.songService.getAllSongs();
+  }
 
-    @Post()
-    async createSong(@Body() data: Song){
-        return await this.songService.createSong(data);
-    }
+  @Post()
+  async createSong(@Body() data: Song){
+    return await this.songService.createSong(data);
+  }
 
-    @Get(':id')
-    async getSongById(@Param('id') id: string){
-        return await this.songService.getSongById(Number(id));
-    }
+  @Get(':id')
+  async getSongById(@Param('id') id: string){
+    return await this.songService.getSongById(Number(id));
+  }
 
-    @Delete(':id')
-    async deleteSongById(@Param('id') id: string){
-        return await this.songService.deleteSong(Number(id));
-    }
+  @Delete(':id')
+  async deleteSongById(@Param('id') id: string){
+    return await this.songService.deleteSong(Number(id));
+  }
 
-    @Put(':id')
-    async updateSongById(@Param('id') id: string, @Body() data: Song){
-        return await this.songService.updateSong(Number(id), data);
-    }
-    
+  @Put(':id')
+  async updateSongById(@Param('id') id: string, @Body() data: Song){
+    return await this.songService.updateSong(Number(id), data);
+  }
+
 }

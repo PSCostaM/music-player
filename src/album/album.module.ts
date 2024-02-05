@@ -1,4 +1,11 @@
 import { Module } from '@nestjs/common';
+import { PrismaModule } from 'src/prisma/prisma.module';
+import { AlbumService } from './album.service';
+import { AlbumController } from './album.controller';
 
-@Module({})
+@Module({
+  controllers: [AlbumController],
+  providers: [AlbumService],
+  imports:[PrismaModule]
+})
 export class AlbumModule {}
