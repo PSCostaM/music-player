@@ -18,6 +18,7 @@ model Song {
   genre String
   userId Int?
   user User? @relation(fields: [userId], references: [id])
+  AlbumxSongxUser AlbumxSongxUser[]
 }
 
 model User {
@@ -29,4 +30,24 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   songs Song[]
+  AlbumxSongxUser AlbumxSongxUser[]
 }
+
+model Album{
+  id Int @id @default(autoincrement())
+  name String 
+  description String?
+  AlbumxSongxUser AlbumxSongxUser[]
+}
+
+model AlbumxSongxUser{
+  id Int @id @default(autoincrement())
+  albumId Int
+  songId Int
+  userId Int
+  album Album @relation(fields: [albumId], references: [id])
+  song Song @relation(fields: [songId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+}
+
+

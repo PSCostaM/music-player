@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { comparePassword } from 'src/utils/bcrypt';
 @Injectable()
@@ -26,7 +25,7 @@ export class AuthService {
             else{
                 const match = await comparePassword(rawpassword, user.password);
                 if(match){
-                    console.log("auth");
+                    console.log("auth"); 
                     resp.data = user;
                 }
                 else{
